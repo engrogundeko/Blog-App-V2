@@ -22,3 +22,11 @@ Category
 - alt_text
 - description
 - alt_text
+
+
+
+## Functional Requirements
+- author can make crud requirements
+- serach functionality by category name or post title
+- Readers can make comments
+- 
