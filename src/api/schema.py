@@ -1,8 +1,8 @@
 from datetime import date
 
-from ninja import Schema, ModelSchema
+from ninja import Schema
 
-from server.models import Category, Images
+from server.models import Category
 
 # class ImageSchema(ModelSchema):
 #     class Config:

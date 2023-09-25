@@ -1,8 +1,8 @@
-from ninja import NinjaAPI, File
+from ninja import NinjaAPI, File, Form
 from ninja.files import UploadedFile
 
 from server.models import Post 
-from .schema import PostSchema, ImageSchema, CategoryShema
+from .schema import PostSchema, CategoryShema
 
 
 api = NinjaAPI()
@@ -14,8 +14,10 @@ def get_all_post(request, payload: PostSchema):
     return qs
 
 @api.post("/post", response={201: PostSchema})
-def add_post(request, payload: PostSchema):
+def add_post(request, payload: PostSchema = Form(...),
+             file : UploadedFile = File(...)):
     payload_dict = payload.dict()
     post = Post(payload_dict)
+
     if not post.save():
         return 401, {"message": "Failed to save"}

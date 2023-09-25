@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 #     def __str__(self) -> str:
 #         return self.alt_text
     
+# def upload_to(instance, filename):
+#     return f"images"
 
 class Category(models.Model):
     # id = models.AutoField()
@@ -34,7 +36,10 @@ class Post(models.Model):
     date_uploaded = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=choices,
                               max_length=255, default="DRAFT")
-    image = models.ForeignKey(Images, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(upload_to="images", 
+                              height_field=None, width_field=None,
+                            max_length=100,
+                              blank=True, null=True)
 
     category = models.ManyToManyField(Category)
 
