@@ -1,0 +1,4 @@
+venv/
+__pycahe__
+.env
+.src/db.sqlite3
