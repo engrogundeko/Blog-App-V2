@@ -1,28 +1,38 @@
 from ninja import Schema, ModelSchema
+from django.contrib.auth.models import User
 
-from src.server.models import Category, Images
+from server.models import Images, Post
+
+
+class Error(Schema):
+    message: str
+
+    
+class UserSchema(ModelSchema):
+    class Config:
+        model = User
+        model_fields = ["username", "email"]
 
 class ImageSchema(ModelSchema):
     class Config:
         model = Images
-        model_fields = [
-            "id",
-            "alt_text",
-            "description",
-            "link",
-    ]
-        
+        model_fields = ["alt_text", "description"]
 
-class CategoryShema(ModelSchema):
-    class Config:
-        model = Category
-        model_fields = "name"
+
+class CategorySchema(Schema):
+    name: str
 
 class PostSchema(Schema):
-    id: int
-    title: str
-    author: str
-    content: str
-    status: str = None
-    image: ImageSchema = None
-    catogory = CategoryShema
+    class Config:
+        model = Post
+        model_field = ["title", "content", "status", "category"]
+
+
+class NewPost(Schema):
+    class Config:
+        model = Post
+        model_field = ["title", "author", "content", "status", "category"]
+    # title: str
+    # content: str
+    # status: str = None
+    # category: CategorySchema
