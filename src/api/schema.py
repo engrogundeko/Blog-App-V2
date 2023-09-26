@@ -1,30 +1,38 @@
-from datetime import date
+from ninja import Schema, ModelSchema
+from django.contrib.auth.models import User
 
-from ninja import Schema
+from server.models import Images, Post
 
-from server.models import Category
 
-# class ImageSchema(ModelSchema):
-#     class Config:
-#         model = Images
-#         model_fields = [
-#             "id",
-#             "alt_text",
-#             "description",
-#             "link",
-#     ]
-        
+class Error(Schema):
+    message: str
 
-class CategoryShema(Schema):
+    
+class UserSchema(ModelSchema):
+    class Config:
+        model = User
+        model_fields = ["username", "email"]
+
+class ImageSchema(ModelSchema):
+    class Config:
+        model = Images
+        model_fields = ["alt_text", "description"]
+
+
+class CategorySchema(Schema):
     name: str
 
 class PostSchema(Schema):
-    title: str
-    author: str
-    content: str
-    date_uploaded: date = None
-    status: str = None
-    image: str = None
-    # image: ImageSchema = None
-    catogory = CategoryShema
+    class Config:
+        model = Post
+        model_field = ["title", "content", "status", "category"]
 
+
+class NewPost(Schema):
+    class Config:
+        model = Post
+        model_field = ["title", "author", "content", "status", "category"]
+    # title: str
+    # content: str
+    # status: str = None
+    # category: CategorySchema
